@@ -9,8 +9,8 @@ include $(TOPDIR)/rules.mk
 
 PKG_NAME:=e2fsprogs
 PKG_CPE_ID:=cpe:/a:e2fsprogs_project:e2fsprogs
-PKG_VERSION:=1.44.0
-PKG_HASH:=a3567042f03fcee0e01db8f923b24cec92e2ba5b11f8e39e245672ad5392723d
+PKG_VERSION:=1.45.3
+PKG_HASH:=90d10066b815e27b0b4875f0d5e396c663e0bf55aa3ca10868978d10c6ffe595
 PKG_RELEASE:=1
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.xz
@@ -20,6 +20,9 @@ HOST_BUILD_PARALLEL:=1
 
 include $(INCLUDE_DIR)/host-build.mk
 
+ifneq ($(shell $(HOSTCC) --version | grep clang),)
+  HOST_CFLAGS += -D__GNUC_PREREQ\(...\)=0
+endif
 HOST_CFLAGS += $(FPIC)
 
 HOST_CONFIGURE_ARGS += \
